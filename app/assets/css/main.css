@@ -217,12 +217,37 @@ a {
 
 /* 容器工具类 */
 .page-container {
-    max-width: theme(maxWidth.7xl);
+    @apply max-w-7xl mx-auto px-4;
     margin-left: auto;
     margin-right: auto;
     padding-left: theme(spacing.4);
     padding-right: theme(spacing.4);
 }
+
+/* 修复 max-width 类的问题 */
+.max-w-xl {
+    max-width: 36rem !important; /* 可选补充 */
+}
+.max-w-2xl {
+    max-width: 42rem !important; /* 您的修复 */
+}
+.max-w-3xl {
+    max-width: 48rem !important; /* 推荐值 */
+}
+.max-w-4xl {
+    max-width: 56rem !important; /* 您的修复 */
+}
+.max-w-5xl {
+    max-width: 64rem !important; /* 延续逻辑 */
+}
+
+/* 小尺寸补充 */
+.max-w-sm { max-width: 24rem !important; } /* 384px */
+.max-w-md { max-width: 28rem !important; } /* 448px */
+
+/* 超大尺寸扩展 */
+.max-w-6xl { max-width: 72rem !important; } /* 1152px */
+.max-w-7xl { max-width: 80rem !important; } /* 1280px */
 
 @media (min-width: theme(screens.sm)) {
     .page-container {
