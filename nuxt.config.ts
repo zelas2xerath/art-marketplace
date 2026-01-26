@@ -1,13 +1,24 @@
-// frontend/nuxt.config.ts
+import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
-  modules: ['@pinia/nuxt', '@vueuse/nuxt', '@nuxt/icon'],
-  //, 'nuxt-socket-io' ,这个模块有问题：DeprecationWarning: Passing invalid argument types to fs.existsSync is deprecated
+  modules: [
+    '@pinia/nuxt',
+    '@vueuse/nuxt',
+    '@nuxt/icon',
+    'shadcn-nuxt',
+  ],
   css: ['~/assets/css/main.css'],
 
-  postcss: {
-    plugins: {
-      '@tailwindcss/postcss': {},
-      autoprefixer: {},
+  // 禁用 Vue DevTools 以避免模块导出错误
+  devtools: { enabled: false },
+
+  // Vite 配置优化
+  vite: {
+    plugins: [tailwindcss()],
+    server: {
+      hmr: {
+        protocol: 'ws',
+        host: 'localhost',
+      },
     },
   },
 
@@ -18,12 +29,5 @@ export default defineNuxtConfig({
     }
   },
 
-  // io: {
-  //   sockets: [{
-  //     name: 'main',
-  //     url: process.env.WS_URL || 'http://localhost:3001',
-  //   }]
-  // },
-
-  compatibilityDate: '2024-01-23',
+  compatibilityDate: '2025-07-15',
 })
