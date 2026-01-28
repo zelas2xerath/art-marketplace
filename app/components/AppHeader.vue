@@ -1105,15 +1105,25 @@ watch(() => props.currentPath, () => {
 <style scoped>
 /* Base Header Styles */
 .app-header-base {
-  @apply bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100;
+  background: var(--surface-heavy);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgb(229 231 235 / 0.5);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .app-header-compact {
-  @apply shadow-none border-b-0;
+  box-shadow: none;
+  border-bottom: 0;
 }
 
 .app-header-minimal {
-  @apply bg-transparent shadow-none border-b-0;
+  background-color: transparent;
+  box-shadow: none;
+  border-bottom: 0;
 }
 
 .app-header-role-client {
@@ -1129,32 +1139,45 @@ watch(() => props.currentPath, () => {
 }
 
 .app-header-container {
-  @apply page-container;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .app-header-content {
-  @apply flex items-center justify-between;
-}
-
-.app-header-content {
-  @apply h-16;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4rem;
 }
 
 .app-header-md .app-header-content {
-  @apply lg:h-20;
+  height: 5rem;
+}
+
+@media (min-width: 1024px) {
+  .app-header-md .app-header-content {
+    height: 5rem;
+  }
 }
 
 .app-header-lg .app-header-content {
-  @apply h-20 lg:h-24;
+  height: 5rem;
+}
+
+@media (min-width: 1024px) {
+  .app-header-lg .app-header-content {
+    height: 6rem;
+  }
 }
 
 /* Logo Styles */
 .app-logo-base {
-  @apply flex items-center gap-3 group;
+  @apply flex items-center gap-3;
 }
 
 .app-logo-icon-base {
-  @apply bg-linear-to-br from-purple-600 to-pink-600 rounded-xl flex items-center justify-center
+  @apply bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl flex items-center justify-center
          shadow-md group-hover:shadow-lg transition-shadow;
 }
 
@@ -1175,7 +1198,7 @@ watch(() => props.currentPath, () => {
 }
 
 .app-logo-title-base {
-  @apply font-bold bg-linear-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent;
+  @apply font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent;
 }
 
 .app-logo-title-sm {
@@ -1200,7 +1223,7 @@ watch(() => props.currentPath, () => {
 }
 
 .app-nav-link-base {
-  @apply group relative px-4 py-2 text-gray-700 font-medium rounded-lg 
+  @apply relative px-4 py-2 text-gray-700 font-medium rounded-lg 
          hover:bg-purple-50 hover:text-purple-600 transition-all duration-200;
 }
 
@@ -1248,7 +1271,7 @@ watch(() => props.currentPath, () => {
 
 /* Action Buttons */
 .app-action-btn {
-  @apply relative p-2 hover:bg-gray-100 rounded-lg transition-colors group;
+  @apply relative p-2 hover:bg-gray-100 rounded-lg transition-colors;
 }
 
 .app-action-btn-md {
@@ -1260,11 +1283,21 @@ watch(() => props.currentPath, () => {
 }
 
 .app-action-icon {
-  @apply w-5 h-5 text-gray-600 group-hover:text-purple-600 transition-colors;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: rgb(75 85 99);
+  transition: color 0.3s ease;
+}
+
+.app-action-btn:hover .app-action-icon {
+  color: rgb(147 51 234);
 }
 
 .app-action-btn-md .app-action-icon {
-  @apply lg:w-6 lg:h-6;
+  @media (min-width: 1024px) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 }
 
 .app-action-btn-lg .app-action-icon {
@@ -1542,7 +1575,12 @@ watch(() => props.currentPath, () => {
 }
 
 .app-mobile-nav-base {
-  @apply page-container py-4 space-y-1;
+  @apply py-4 space-y-1;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .app-mobile-nav-lg {
@@ -1693,7 +1731,7 @@ watch(() => props.currentPath, () => {
 }
 
 .app-notification-item-unread {
-  @apply bg-blue-50/50;
+  @apply bg-primary-50/50;
 }
 
 .app-notification-icon-base {
@@ -1756,7 +1794,7 @@ watch(() => props.currentPath, () => {
 }
 
 /* High contrast mode */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .app-header-base {
     @apply border-2;
   }
@@ -1779,7 +1817,8 @@ watch(() => props.currentPath, () => {
 /* Dark mode support (future enhancement) */
 @media (prefers-color-scheme: dark) {
   .app-header-base {
-    @apply bg-gray-900/95 border-gray-800;
+    background: var(--surface-heavy);
+    border-bottom-color: rgb(55 65 81 / 0.5);
   }
   
   .app-nav-link-base {
