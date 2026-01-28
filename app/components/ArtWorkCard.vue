@@ -1,17 +1,6 @@
 <!--
   ArtworkCard Component
   作品卡片组件
-  
-  Enhanced artwork card component with multiple variants, sizes, and interactive features.
-  
-  Features:
-  - Multiple variants (grid, list, featured)
-  - Multiple sizes (sm, md, lg)
-  - Interactive actions (like, add to cart, quick view)
-  - Price display with discount support
-  - Tag system
-  - Responsive design
-  - Accessibility support
 -->
 
 <template>
@@ -90,7 +79,7 @@
             <PriceDisplay
               :price="artwork.price"
               :original-price="artwork.originalPrice"
-              :currency="'¥'"
+              :currency= "'CNY'"
               :size="size === 'lg' ? 'md' : 'sm'"
               :show-discount="!!artwork.originalPrice"
             />
@@ -150,7 +139,7 @@
             <PriceDisplay
               :price="artwork.price"
               :original-price="artwork.originalPrice"
-              :currency="'¥'"
+              :currency="'CNY'"
               :size="size === 'lg' ? 'md' : 'sm'"
               :show-discount="!!artwork.originalPrice"
             />
@@ -188,7 +177,7 @@
               <PriceDisplay
                 :price="artwork.price"
                 :original-price="artwork.originalPrice"
-                :currency="'¥'"
+                :currency="'CNY'"
                 :size="size === 'lg' ? 'md' : 'sm'"
                 :show-discount="!!artwork.originalPrice"
               />
@@ -271,6 +260,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { ComponentSize } from '~/types/design-tokens'
+import PriceDisplay from "~/components/ui/PriceDisplay.vue";
 
 export interface ArtworkCardProps {
   artwork: {
@@ -478,353 +468,628 @@ const formatDate = (date: Date): string => {
 <style scoped>
 /* Base Card Styles */
 .artwork-card-base {
-  @apply w-full;
+  width: 100%;
 }
 
 .artwork-card-grid,
 .artwork-card-featured {
-  @apply block;
+  display: block;
 }
 
 .artwork-card-list {
-  @apply block;
+  display: block;
 }
 
 /* Link Styles */
 .artwork-link-base {
-  @apply group block bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl 
-         transition-all duration-300 border border-gray-100 hover:border-gray-200;
+  display: block;
+  background-color: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid rgb(243 244 246);
+}
+
+.artwork-link-base:hover {
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  border-color: rgb(229 231 235);
 }
 
 .artwork-link-grid,
 .artwork-link-featured {
-  @apply flex flex-col;
+  display: flex;
+  flex-direction: column;
 }
 
 .artwork-card-list {
-  @apply flex gap-4;
+  display: flex;
+  gap: 1rem;
 }
 
 /* Image Container */
 .artwork-image-container-base {
-  @apply relative overflow-hidden bg-gray-100;
+  position: relative;
+  overflow: hidden;
+  background-color: rgb(243 244 246);
 }
 
 .artwork-image-container-sm {
-  @apply aspect-[3/4];
+  aspect-ratio: 3/4;
 }
 
 .artwork-image-container-md {
-  @apply aspect-[3/4];
+  aspect-ratio: 3/4;
 }
 
 .artwork-image-container-lg {
-  @apply aspect-[4/5];
+  aspect-ratio: 4/5;
 }
 
 /* Image */
 .artwork-image-base {
-  @apply w-full h-full object-cover transition-transform duration-500;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
 }
 
-.artwork-image-grid {
-  @apply group-hover:scale-110;
+.artwork-link-base:hover .artwork-image-grid {
+  transform: scale(1.1);
 }
 
-.artwork-image-featured {
-  @apply group-hover:scale-105;
+.artwork-link-base:hover .artwork-image-featured {
+  transform: scale(1.05);
 }
 
 /* Overlay */
 .artwork-overlay-base {
-  @apply absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent 
-         opacity-0 group-hover:opacity-100 transition-opacity duration-300;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(0 0 0 / 0.6), transparent, transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.artwork-link-base:hover .artwork-overlay-base {
+  opacity: 1;
 }
 
 .artwork-overlay-content-base {
-  @apply absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-2 
-         group-hover:translate-y-0 transition-transform duration-300;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  color: white;
+  transform: translateY(0.5rem);
+  transition: transform 0.3s ease;
+}
+
+.artwork-link-base:hover .artwork-overlay-content-base {
+  transform: translateY(0);
 }
 
 .artwork-overlay-content-sm {
-  @apply p-3;
+  padding: 0.75rem;
 }
 
 .artwork-overlay-content-lg {
-  @apply p-5;
+  padding: 1.25rem;
+}
+
+/* Base Card Styles */
+.artwork-card-base {
+  width: 100%;
+}
+
+.artwork-card-grid,
+.artwork-card-featured {
+  display: block;
+}
+
+.artwork-card-list {
+  display: block;
+}
+
+/* Link Styles */
+.artwork-link-base {
+  display: block;
+  background-color: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid rgb(243 244 246);
+}
+
+.artwork-link-base:hover {
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  border-color: rgb(229 231 235);
+}
+
+.artwork-link-grid,
+.artwork-link-featured {
+  display: flex;
+  flex-direction: column;
+}
+
+.artwork-card-list {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Image Container */
+.artwork-image-container-base {
+  position: relative;
+  overflow: hidden;
+  background-color: rgb(243 244 246);
+}
+
+.artwork-image-container-sm {
+  aspect-ratio: 3/4;
+}
+
+.artwork-image-container-md {
+  aspect-ratio: 3/4;
+}
+
+.artwork-image-container-lg {
+  aspect-ratio: 4/5;
+}
+
+/* Image */
+.artwork-image-base {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.artwork-link-base:hover .artwork-image-grid {
+  transform: scale(1.1);
+}
+
+.artwork-link-base:hover .artwork-image-featured {
+  transform: scale(1.05);
+}
+
+/* Overlay */
+.artwork-overlay-base {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(0 0 0 / 0.6), transparent, transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.artwork-link-base:hover .artwork-overlay-base {
+  opacity: 1;
+}
+
+.artwork-overlay-content-base {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  color: white;
+  transform: translateY(0.5rem);
+  transition: transform 0.3s ease;
+}
+
+.artwork-link-base:hover .artwork-overlay-content-base {
+  transform: translateY(0);
+}
+
+.artwork-overlay-content-sm {
+  padding: 0.75rem;
+}
+
+.artwork-overlay-content-lg {
+  padding: 1.25rem;
 }
 
 /* Tags */
 .artwork-tags {
-  @apply flex flex-wrap gap-1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
 }
 
 .artwork-tag {
-  @apply px-2 py-1 bg-white/20 backdrop-blur-sm rounded text-xs font-medium;
+  padding: 0.25rem 0.5rem;
+  background-color: rgb(255 255 255 / 0.2);
+  backdrop-filter: blur(4px);
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
 /* Actions */
 .artwork-actions-base {
-  @apply absolute top-3 right-3 flex gap-2;
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
 }
 
 .artwork-actions-sm {
-  @apply top-2 right-2 gap-1;
+  top: 0.5rem;
+  right: 0.5rem;
+  gap: 0.25rem;
 }
 
 .artwork-actions-lg {
-  @apply top-4 right-4 gap-3;
+  top: 1rem;
+  right: 1rem;
+  gap: 0.75rem;
 }
 
 .artwork-action-btn {
-  @apply p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white 
-         transition-colors shadow-sm hover:shadow-md;
+  padding: 0.5rem;
+  background-color: rgb(255 255 255 / 0.9);
+  backdrop-filter: blur(4px);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+.artwork-action-btn:hover {
+  background-color: white;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
 .artwork-like-btn-liked {
-  @apply bg-red-50 hover:bg-red-100;
+  background-color: rgb(254 242 242);
+}
+
+.artwork-like-btn-liked:hover {
+  background-color: rgb(254 226 226);
 }
 
 /* Price Badge */
 .artwork-price-badge-base {
-  @apply absolute bottom-3 left-3 bg-white/95 backdrop-blur-sm rounded-lg px-3 py-2 shadow-sm;
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  background-color: rgb(255 255 255 / 0.95);
+  backdrop-filter: blur(4px);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 }
 
 .artwork-price-badge-sm {
-  @apply bottom-2 left-2 px-2 py-1;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  padding: 0.25rem 0.5rem;
 }
 
 .artwork-price-badge-lg {
-  @apply bottom-4 left-4 px-4 py-3;
+  bottom: 1rem;
+  left: 1rem;
+  padding: 0.75rem 1rem;
 }
 
 /* Content */
 .artwork-content-base {
-  @apply p-4;
+  padding: 1rem;
 }
 
 .artwork-content-grid {
-  @apply flex-1;
+  flex: 1;
 }
 
 .artwork-content-featured {
-  @apply flex-1;
+  flex: 1;
 }
 
 .artwork-content-sm {
-  @apply p-3;
+  padding: 0.75rem;
 }
 
 .artwork-content-lg {
-  @apply p-5;
+  padding: 1.25rem;
 }
 
 /* Title */
 .artwork-title-base {
-  @apply font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-primary-600 
-         transition-colors;
+  font-weight: 600;
+  color: rgb(17 24 39);
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+.artwork-link-base:hover .artwork-title-base {
+  color: rgb(147 51 234);
 }
 
 .artwork-title-grid {
-  @apply text-base;
+  font-size: 1rem;
 }
 
 .artwork-title-featured {
-  @apply text-lg;
+  font-size: 1.125rem;
 }
 
 .artwork-title-list {
-  @apply text-base;
+  font-size: 1rem;
 }
 
 .artwork-title-sm {
-  @apply text-sm mb-1;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
 }
 
 .artwork-title-lg {
-  @apply text-xl mb-3;
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
 }
 
 /* Artist */
 .artwork-artist-base {
-  @apply flex items-center gap-2 mb-3;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .artwork-artist-sm {
-  @apply gap-1.5 mb-2;
+  gap: 0.375rem;
+  margin-bottom: 0.5rem;
 }
 
 .artwork-artist-lg {
-  @apply gap-3 mb-4;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .artwork-avatar-base {
-  @apply rounded-full object-cover;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .artwork-avatar-sm {
-  @apply w-5 h-5;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .artwork-avatar-md {
-  @apply w-6 h-6;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .artwork-avatar-lg {
-  @apply w-8 h-8;
+  width: 2rem;
+  height: 2rem;
 }
 
 .artwork-artist-name-base {
-  @apply text-gray-600 line-clamp-1 flex-1;
+  color: rgb(75 85 99);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
 }
 
 .artwork-artist-name-sm {
-  @apply text-xs;
+  font-size: 0.75rem;
 }
 
 .artwork-artist-name-md {
-  @apply text-sm;
+  font-size: 0.875rem;
 }
 
 .artwork-artist-name-lg {
-  @apply text-base;
+  font-size: 1rem;
 }
 
 .artwork-verified-base {
-  @apply text-blue-500 shrink-0;
+  color: rgb(59 130 246);
+  flex-shrink: 0;
 }
 
 .artwork-verified-sm {
-  @apply w-4 h-4;
+  width: 1rem;
+  height: 1rem;
 }
 
 .artwork-verified-md {
-  @apply w-5 h-5;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .artwork-verified-lg {
-  @apply w-6 h-6;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 /* Stats */
 .artwork-stats-base {
-  @apply flex items-center gap-4 text-gray-500;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: rgb(107 114 128);
 }
 
 .artwork-stats-sm {
-  @apply gap-3 text-xs;
+  gap: 0.75rem;
+  font-size: 0.75rem;
 }
 
 .artwork-stats-lg {
-  @apply gap-5 text-base;
+  gap: 1.25rem;
+  font-size: 1rem;
 }
 
 .artwork-stat {
-  @apply flex items-center gap-1;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .artwork-stat-icon {
-  @apply w-4 h-4;
+  width: 1rem;
+  height: 1rem;
 }
 
 .artwork-date {
-  @apply text-xs text-gray-400 ml-auto;
+  font-size: 0.75rem;
+  color: rgb(156 163 175);
+  margin-left: auto;
 }
 
 /* Price */
 .artwork-price-base {
-  @apply mt-3 pt-3 border-t border-gray-100;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgb(243 244 246);
 }
 
 .artwork-price-sm {
-  @apply mt-2 pt-2;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
 }
 
 .artwork-price-lg {
-  @apply mt-4 pt-4;
+  margin-top: 1rem;
+  padding-top: 1rem;
 }
 
 /* List Variant Specific Styles */
 .artwork-list-image-container-base {
-  @apply relative overflow-hidden bg-gray-100 rounded-lg shrink-0;
+  position: relative;
+  overflow: hidden;
+  background-color: rgb(243 244 246);
+  border-radius: 0.5rem;
+  flex-shrink: 0;
 }
 
 .artwork-list-image-container-sm {
-  @apply w-20 h-20;
+  width: 5rem;
+  height: 5rem;
 }
 
 .artwork-list-image-container-md {
-  @apply w-24 h-24;
+  width: 6rem;
+  height: 6rem;
 }
 
 .artwork-list-image-container-lg {
-  @apply w-32 h-32;
+  width: 8rem;
+  height: 8rem;
 }
 
 .artwork-list-image-base {
-  @apply w-full h-full object-cover group-hover:scale-110 transition-transform duration-300;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.artwork-link-base:hover .artwork-list-image-base {
+  transform: scale(1.1);
 }
 
 .artwork-list-content-base {
-  @apply flex-1 min-w-0;
+  flex: 1;
+  min-width: 0;
 }
 
 .artwork-list-header {
-  @apply flex items-start justify-between gap-4 mb-2;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .artwork-list-price {
-  @apply shrink-0;
+  flex-shrink: 0;
 }
 
 .artwork-list-tags {
-  @apply flex flex-wrap gap-1 mb-3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
 }
 
 .artwork-list-tag {
-  @apply px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs;
+  padding: 0.25rem 0.5rem;
+  background-color: rgb(243 244 246);
+  color: rgb(75 85 99);
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
 }
 
 .artwork-list-footer {
-  @apply flex items-center justify-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .artwork-list-actions {
-  @apply flex items-center gap-2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .artwork-list-action-btn {
-  @apply p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg 
-         transition-colors;
+  padding: 0.5rem;
+  color: rgb(156 163 175);
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.artwork-list-action-btn:hover {
+  color: rgb(75 85 99);
+  background-color: rgb(243 244 246);
 }
 
 .artwork-list-action-btn-liked {
-  @apply text-red-500 hover:text-red-600 bg-red-50 hover:bg-red-100;
+  color: rgb(239 68 68);
+  background-color: rgb(254 242 242);
+}
+
+.artwork-list-action-btn-liked:hover {
+  color: rgb(220 38 38);
+  background-color: rgb(254 226 226);
 }
 
 /* Responsive adjustments */
 @media (max-width: 640px) {
   .artwork-card-list .artwork-link-base {
-    @apply flex-col;
+    flex-direction: column;
   }
   
   .artwork-list-image-container-base {
-    @apply w-full aspect-[3/2];
+    width: 100%;
+    aspect-ratio: 3/2;
   }
   
   .artwork-list-header {
-    @apply flex-col items-start gap-2;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
 }
 
 /* High contrast mode */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .artwork-link-base {
-    @apply border-2;
+    border-width: 2px;
   }
   
   .artwork-action-btn {
-    @apply border border-gray-300;
+    border: 1px solid rgb(209 213 219);
   }
 }
 
@@ -834,7 +1099,7 @@ const formatDate = (date: Date): string => {
   .artwork-link-base,
   .artwork-overlay-base,
   .artwork-overlay-content-base {
-    @apply transition-none;
+    transition: none;
   }
 }
 </style>
