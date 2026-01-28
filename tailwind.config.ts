@@ -112,11 +112,38 @@ export default {
     				to: {
     					height: '0'
     				}
-    			}
+    			},
+				'fade-in': {
+					from: { opacity: '0' },
+					to: { opacity: '1' },
+				},
+				'slide-up': {
+					from: {
+						opacity: '0',
+						transform: 'translateY(20px)',
+					},
+					to: {
+						opacity: '1',
+						transform: 'translateY(0)',
+					},
+				},
+				'scaleIn': {
+					from: {
+						opacity: 0,
+						transform: 'scale(0.95)',
+					},
+					to: {
+						opacity: 1,
+						transform: 'scale(1)',
+					}
+				}
     		},
     		animation: {
     			'accordion-down': 'accordion-down 0.2s ease-out',
-    			'accordion-up': 'accordion-up 0.2s ease-out'
+    			'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 300ms cubic-bezier(0, 0, 0.2, 1)',
+				'slide-up': 'slide-up 300ms cubic-bezier(0, 0, 0.2, 1)',
+				'animate-scale-in': 'scaleIn 300ms cubic-bezier(0, 0, 0.2, 1)',
     		},
     		screens: designTokens.breakpoints,
 			backgroundImage: {
@@ -131,4 +158,5 @@ export default {
 		require('@tailwindcss/typography'), // 内容排版
 		require('@tailwindcss/aspect-ratio'), // 宽高比
 	],
+
 }
